@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../../actions/authActions';
+import './Auth.css'
 
 class Login extends React.Component {
   constructor() {
@@ -24,10 +25,7 @@ class Login extends React.Component {
   loginSubmit(e) {
     e.preventDefault();
     this.props.login(this.state).then((res) => {
-      console.log('res in comp')
-      console.log(res);
       if(res.status === 200){
-        console.log(res.data.token);
         this.setState({loginSuccess: true});
       } else if(res.response.status === 401) {
         this.setState({errors: true});
@@ -44,7 +42,7 @@ class Login extends React.Component {
       <div className="container">
         <div className="row justify-content-md-center">
           <div className="col-md-5">
-            <form onSubmit={this.loginSubmit}>
+            <form onSubmit={this.loginSubmit} className="auth-form">
               <label className="push-top-sm-xs">Login</label>
               <input placeholder="Email" className="form-control" name="email" onChange={this.handleChange.bind(this)}/>
               <label className="push-top-sm-xs">Password</label>

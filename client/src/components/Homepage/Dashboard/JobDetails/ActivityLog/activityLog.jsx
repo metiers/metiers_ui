@@ -30,11 +30,6 @@ class ActivityLog extends Component {
     this.addEvent = this.addEvent.bind(this);
   }
 
-  componentWillMount() {
-    console.log('checking jobid', this.props.jobDetailsAdditional.job_id);
-  }
-
-
   handleDateChange (date) {
     this.setState({
       date: date
@@ -55,7 +50,6 @@ class ActivityLog extends Component {
 
   addEvent() {
     const context = this;
-    console.log('this is job id', this.props.jobDetailsAdditional.job_id);
     const data = {      
       job_id: this.props.jobDetailsAdditional.job_id,
       notes: this.state.text,
@@ -75,8 +69,10 @@ class ActivityLog extends Component {
 
   render() {
     return (
-      <div className='container'>
-        <h4>Date</h4>
+      <div className='container push-top'>
+        <div className="offset-md-1 col-md-10 offset-md-1">
+        <h3>Activity Log</h3>
+        <label className="activity-log-label">Date</label>
         <DatePicker
           className="form-control"
           id="jobDeadlineSelect"
@@ -84,24 +80,24 @@ class ActivityLog extends Component {
           onChange={this.handleDateChange}
           dateFormat="LL"
         />
-        <h4 className="push-top-sm">Title</h4>
+        <label className="activity-log-label">Title</label>
         <div className="row">
           <div className="col-md-3">
-            <input className="form-control" value={this.state.value} onChange={this.handleTitleChange}/>
+            <input className="form-control" placeholder="Title" value={this.state.value} onChange={this.handleTitleChange}/>
           </div>
         </div>
-        <h4 className="push-top-sm">Type</h4>
-        <select value={this.state.option} onChange={this.handleTypeChange}>
+        <label className="activity-log-label activity-log-type">Type</label>
+        <select value={this.state.option} onChange={this.handleTypeChange} className="form-control activity-log-dropdown">
           <option value='Phone Call'>Phone Call</option>
           <option value='Interview'>Interview</option>
           <option value='Coding Challenge'>Coding Challenge</option>
           <option value='Other'>Other</option>
         </select>
-        <button className="btn btn-job-form push-left-sm  " onClick={this.addEvent}>Submit</button>
-        <h4 className="push-top-sm">Activity Log</h4>
+        <button className="btn btn-job-form push-left-sm " onClick={this.addEvent}>Submit</button>
         <MuiThemeProvider>
           <ActivityLogTable header={this.header} job_id={this.props.jobDetailsAdditional.job_id} />
         </MuiThemeProvider>
+        </div>
       </div>
     );
   }

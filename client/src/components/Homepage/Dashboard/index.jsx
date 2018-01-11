@@ -32,7 +32,6 @@ class Home extends React.Component {
     axios.post(`http://localhost:3003/dashboard`, {
       id: this.props.auth.user.id,
     }).then((res) => {
-      console.log('this is res.data', res.data)
       if (res.data.length === 0) {
         context.props.dashboardAction([]);
       } else {
@@ -40,22 +39,6 @@ class Home extends React.Component {
       }
     })
       .catch(err => console.log(err));
-  }
-
-  componentDidMount() {
-    // auth.refresh();
-    // var context = this;
-    // axios.post(`http://localhost:3003/dashboard`, {
-    //   id: this.props.auth.user.id, 
-    // }).then((res) => {
-    //     console.log('this is res.datasdasdasda', res.data)
-    //     if (res.data.length === 0) {
-    //       context.props.dashboardAction([]);
-    //     } else {
-    //       context.props.dashboardAction(res.data);
-    //     }
-    //   })
-    //   .catch(err => console.log(err));
   }
 
   toggleClass() {
@@ -86,7 +69,7 @@ class Home extends React.Component {
         <div id="wrapper" className={this.state.active ? 'toggled' : 'notToggled'}>
           <Navigation />
           <div id="page-content-wrapper">
-            <div className="container-fluid">
+            <div className="container-fluid header-top-nav">
               <div className="row no-gutters">
                 <div className="col-md-3">
                   <button
@@ -101,28 +84,9 @@ class Home extends React.Component {
                   <h3>{this.capitalize(this.props.auth.user.firstName)} {this.capitalize(this.props.auth.user.lastName)}</h3>
                 </div>
                 <div className="col-md-1">
-                  <a href="#" onClick={this.logoutHandler.bind(this)}>Logout</a>
+                  <a href="#" id="logout-btn" onClick={this.logoutHandler.bind(this)}>Logout</a>
                 </div>
               </div>
-            </div>
-            <div className="container push-bottom">
-            <div className="row">
-              <div className="col-md-4">
-                <div className="job-tab">
-                  <NavLink to="/home/will-apply" activeClassName="selected" href="/home/will-apply">Will Apply</NavLink>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="job-tab">
-                  <NavLink to="/home/applied" activeClassName="selected" href="/home/applied">Applied</NavLink>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="job-tab">
-                  <NavLink to="/home/follow-up" activeClassName="selected" href="/home/follow-up">Follow-Up</NavLink>
-                </div>
-              </div>
-            </div>
             </div>
             <Switch>
               <Route path="/home/will-apply" render={() => <WillApply />} />
