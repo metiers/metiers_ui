@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import config from '../../../../../../../config';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
@@ -85,7 +86,7 @@ class EditInfo extends Component {
   closeModal() {
     const context = this;
 
-    axios.post('http://localhost:3003/jobDetail', {
+    axios.post(`http://${config.server}:${config.port}/jobDetail`, {
         jobId: this.state.job.jobId
     }).then((res) => {
       context.props.jobDetailsAction(res.data[0]);
@@ -93,10 +94,9 @@ class EditInfo extends Component {
         this.setState({editInfoRedirect: true});
       }
 
-      axios.post(`http://localhost:3003/dashboard`, {
+      axios.post(`http://${config.server}:${config.port}/dashboard`, {
         id: context.props.auth.user.id,
       }).then((res) => {
-        console.log('this is res.data', res.data)
         if (res.data.length === 0) {
           context.props.dashboardAction([]);
         } else {
@@ -107,7 +107,7 @@ class EditInfo extends Component {
   }
 
   handleSubmit() {
-    axios.post('http://localhost:3003/editJobInfo', {
+    axios.post(`http://${config.server}:${config.port}/editJobInfo`, {
       job: this.state.job,
       company: this.state.company,
     }).then((res) => {
